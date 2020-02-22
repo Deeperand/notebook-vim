@@ -1,0 +1,157 @@
+% input this file: \input{/Users/he/Documents/LaTeX/Notebooks/notebook_customize.tex}
+% documentclass need: ctex related (ctexart, ctexbook, ...)
+% test
+
+% global setting
+    \ctexset{autoindent = 0em} % cancel autoindent
+
+    % keep appropriate distance while there being a large equation in a row
+    \setlength\lineskiplimit{0.3em} 
+    \setlength\lineskip{0.3em}
+
+    % change the symbol size in math mode
+    \DeclareMathSizes{10.54}{10.54}{5.27}{3.16}
+
+
+% other packages
+%    \usepackage{pdfsync}
+    \usepackage{import}
+    \usepackage{xifthen}
+    \usepackage{pdfpages}
+    \usepackage{transparent}
+
+    % package in drawing
+    \usepackage{tikz}
+    \usetikzlibrary{optics} % use library: optics (made the draw of optic much easier)
+    \usetikzlibrary{arrows.meta} % more type of arrow
+    \usetikzlibrary{intersections} % calcuate intersection
+    \usetikzlibrary{calc}
+
+    % package using in text mode
+    \usepackage[a4paper, left=2.54cm, right=2.54cm, top=2.54cm, bottom=2.54cm]{geometry}
+    \usepackage{listings}
+    \usepackage{xcolor}
+    \usepackage{enumitem}
+    \usepackage{graphicx}
+    \usepackage{float}
+    \usepackage{booktabs}
+    \usepackage{caption} % control the caption format of picture
+    \usepackage{longtable} % auto-change-page-table
+    % \usepackage{hyperref} % provide command: \autoref
+    \usepackage{nameref} % provide command: \nameref
+    \usepackage{fontspec} % font select and set
+    \usepackage{CJKfntef} % enhanced under modify, the parameter can cancel replacing '\emph' with '\CJKunderline'
+    \usepackage{ulem}[normalem]
+
+    % package using in math mode
+    \usepackage{amsmath}
+        \allowdisplaybreaks[4] % allowed multiline equation can change page
+        % \everymath{\displaystyle} % set default math style as displaystyle
+    \usepackage{amssymb}
+    \usepackage{mathtools}
+    \usepackage{mathrsfs} % provide the font of \mathscr
+    \usepackage{tensor}
+    \usepackage{upgreek}
+    \usepackage{extarrows}
+    \usepackage{yhmath}
+    \usepackage{nccmath} % realign the equation
+    \usepackage{xfrac} % split level fractions
+    \usepackage{bbm} % hollow number
+    \usepackage{bm} % bold, but keep italic
+
+% self define
+    \definecolor{CodeGrey}{RGB}{240, 240, 240} % the grey used in code block or single code
+
+% command/environment building and renewing
+    % text
+        % env
+            % Solve: used to "proof", "solve" and so on
+            \newenvironment{Solve}
+            [1][解:]%
+            {\paragraph*{#1\\}}%
+            {\begin{flushright}$\square$\end{flushright}}
+
+        % command
+            \newcommand{\Code}[1]{\colorbox{CodeGrey}{\rule{0pt}{1ex}\texttt{#1}}} % code, had the less height "ex", which means even the punctuation like comma had the height "ex".
+            \newcommand{\completesolving}{\begin{flushright}$\square$\end{flushright}} % the square
+            \newcommand{\CompleteExample}{\begin{flushright}$\blacksquare$\end{flushright}} % the black square
+            \newcommand\DoubleQuote[1]{``#1''} % double quote
+            \newcommand\SingleQuote[1]{`#1'} % single quote
+
+        % font
+            \newfontfamily\Zapfino{Zapfino}
+
+    % math
+        % command
+            \newcommand{\FDEq}[1]{\fbox{$\displaystyle #1$}} % framed display-style equation
+        % notation
+            \newcommand{\Dbar}{\mathrm{d} \hspace*{-0.15em}\bar{}\hspace*{0.1em}} % \mathrm{d} with bar
+            \newcommand\MaE{\mspace{2mu}\mathrm{e}\mspace{2mu}} % "Ma" is the abbreviation of "Math", "E" means natural constant "e"
+            \newcommand\MaPI{\mspace{2mu}\uppi\mspace{2mu}} % ratio of the circumference of a circle to its diameter
+
+    %set the display style of enumerate number
+    \renewcommand\theenumi{\arabic{enumi}}
+    \renewcommand\labelenumi{\theenumi).}
+    \renewcommand\theenumii{\arabic{enumii}}
+    \renewcommand\theenumiii{\Alph{enumiii}}
+    \renewcommand\theenumiv{\Roman{enumiv}}
+
+    % theorem environment
+    \makeatletter
+    \@ifclassloaded{ctexbook}{%
+        \newtheorem{Claim}{Claim}[chapter]%
+        \newtheorem{Concept}{Concept}[chapter]%
+        \newtheorem{Definition}{Definition}[chapter]%
+        \newtheorem{Example}{Example}[chapter]%
+        \newtheorem{Formula}{Formula}[chapter]%
+        \newtheorem{Law}{Law}[chapter]%
+        \newtheorem{Property}{Property}[chapter]%
+        \newtheorem{Theorem}{Theorem}[chapter]%
+    }{}
+    \makeatother
+
+% initialize the setting
+    % avoid too large interval between picture's caption and picture
+    \captionsetup{skip = 5pt}
+
+    \setcounter{secnumdepth}{5}
+    \ctexset{
+        section/name = \S\,,
+        subsection/beforeskip = 1.3ex plus 0.4ex minus 0.08ex, % 40% of original
+        subsection/afterskip = 0.375ex plus 0.05ex, % 25% of original
+        paragraph/aftertitle = \hspace{-0.125em},
+        paragraph/aftername = \hspace{0.3em},
+        paragraph/number = \arabic{paragraph}.,
+        paragraph/beforeskip = 0.4875ex plus 0.15ex minus 0.03ex, % 15% of original
+        paragraph/afterskip = 0.15em, % 15% of original
+        paragraph/hang = false
+    }
+
+    \lstset{
+    tabsize=4, % size of tab
+    xleftmargin=2em, % distance between frame and paper edge
+    xrightmargin=2em,
+    framexleftmargin=1.5em, % are the dimensions which are used additionally to framesep to make up the margin of a     frame (distance between code and frame)
+    framexrightmargin=1.5em, 
+    basicstyle=\ttfamily,
+    breaklines=true,
+    columns=flexible,
+    numbers=left,                                        % 在左侧显示行号
+    numberstyle=\color{gray},                       % 设定行号格式
+    numbersep=5pt,
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color{CodeGrey},               % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\footnotesize\color{darkgray},
+    commentstyle=\ttfamily\color[RGB]{49,150,49},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false                               % 不显示字符串中的空格
+    }
+
+    \setlist[enumerate]{
+        itemsep = 0pt,
+        topsep = 0pt,
+        partopsep = 0pt,
+        parsep = 0pt,
+        labelsep = 0.3em,
+    }
